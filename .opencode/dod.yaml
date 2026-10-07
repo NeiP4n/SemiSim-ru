@@ -1,0 +1,927 @@
+version: 1
+project:
+  name: SemiSim-ru
+  purpose: Полный перевод интерфейса игры SemiSim 2.2.1 на русский язык патчем байткода
+  root: /home/isako/Рабочий стол/Desktop/Projects/SemiSim-ru
+  type: tools
+  conventions: Питон без внешних зависимостей (только stdlib). Патч воспроизводим из словаря.
+versions:
+  game: 2.2.1 (lib/app/SemiSim-2.2.1.jar, .jpackage.xml app-version)
+  jpackage: 25.0.3 (lib/app/.jpackage.xml jpackage-state)
+  build_jdk: 25 (META-INF/MANIFEST.MF Created-By Build-Jdk-Spec, Maven Archiver 3.6.1)
+  game_bytecode: major version 52 / Java 8 (javap -v electrodynamics.SemiSim)
+  javafx_bytecode: major version 68 → запуск только на JDK 25
+  source: pom.xml в META-INF/maven/SemiSim/SemiSim/pom.xml
+repo_state:
+  branch: main
+  head: e1afdbda061307ce70664d27dfd6202d4b857eeb
+  dirty: 0
+  remote: https://github.com/NeiP4n/SemiSim-ru.git
+task_id: semisim-ru-localization-2026-10-06
+scope:
+  in_scope:
+  - 'КонстантыUtf8 в electrodynamics/**/*.class: только видимые пользователю строки'
+  - Кириллические глифы в electrodynamics/util/Font7x5.class (подписи на поле)
+  - Встроенная справка README.html и examples.html
+  - Видимые подписи разделов с примерами в examples.html
+  - Лаунчер и проверка запуска
+  out_of_scope:
+  - Логика физики, рендера, формат сохранений .semisim и preferences.json
+  - Строки-ключи (см. инвариант INV-KEYS)
+  - 'Steam-функции: Workshop, достижения, загрузка библиотек SteamAPI'
+  - Перевод материалов и названий папок примеров (английские ключи в примерах)
+  - 'Код библиотек: JavaFX, FlatLaf, JFreeChart, steamworks4j, libGDX'
+surface:
+  extractor: unzip -Z1 <jar> 'electrodynamics/*' | grep '\.class$'
+  fingerprint: __FP__
+  generated_at: 2026-10-06 21:41:56+00:00
+  note: Исполняемая поверхность — 187 классов пакета electrodynamics; список берётся экстрактором из архива
+    игры.
+coverage:
+  surface:
+    extractor: unzip -Z1 $JAR 'electrodynamics/*' | grep '\.class$'
+    fingerprint: sha256:0f76c91aa1497b62
+    generated_at: '2026-10-06T21:44:56Z'
+    counts:
+      game_classes: 187
+      game_classes_patched: 55
+      strings_total: 1179
+      strings_visible: 589
+      strings_forbidden: 467
+    leaf_coverage:
+      symbols_in_leaves: 589
+      symbols_outside_leaves: 467
+      leaf_targets: 7
+      note: строки, признанные переводимыми, покрыты словарём полностью; полнота перевода всех меню не
+        заявляется, длину подписей проверяет только живой запуск
+    leaf_targets: 14
+  complete: false
+  items:
+  - path: tools/classfile.py
+    status: IN_SCOPE
+    reason: разбор и пересборка пула констант, лист L-PATCH
+  - path: tools/codescan.py
+    status: IN_SCOPE
+    reason: разбор инструкций, поиск ключей, лист L-DISASM
+  - path: tools/extract.py
+    status: IN_SCOPE
+    reason: классификация строк, лист L-EXTRACT
+  - path: tools/check_classify.py
+    status: IN_SCOPE
+    reason: оракул классификации, лист L-EXTRACT
+  - path: tools/check_disasm.py
+    status: IN_SCOPE
+    reason: оракул границ инструкций, лист L-DISASM
+  - path: tools/check_dict.py
+    status: IN_SCOPE
+    reason: проверка словаря, лист L-DICT
+  - path: tools/negative_control.sh
+    status: DEPENDENCY
+    reason: 'служебный скрипт проверки: он назван в what листа, но отдельной проверяемой единицы не имеет'
+  - path: tools/font7x5.py
+    status: IN_SCOPE
+    reason: генерация шрифта с кириллицей, лист L-FONT
+  - path: tools/patch.py
+    status: IN_SCOPE
+    reason: сборка русского JAR, лист L-PATCH
+  - path: tools/build.sh
+    status: DEPENDENCY
+    reason: 'служебный скрипт проверки: он назван в what листа, но отдельной проверяемой единицы не имеет'
+  - path: tools/verify_launch.sh
+    status: DEPENDENCY
+    reason: 'служебный скрипт проверки: он назван в what листа, но отдельной проверяемой единицы не имеет'
+  - path: tools/help_install.py
+    status: IN_SCOPE
+    reason: установка справки, лист L-HELP
+  - path: dict/translations.json
+    status: IN_SCOPE
+    reason: словарь перевода, лист L-DICT
+  - path: help/README.html
+    status: IN_SCOPE
+    reason: перевод справки, лист L-HELP
+  - path: help/examples.html
+    status: IN_SCOPE
+    reason: перевод справки, лист L-HELP
+  - path: SemiSim-ru.sh
+    status: IN_SCOPE
+    reason: лаунчер, лист L-LAUNCHER
+  - path: electrodynamics/util/Font7x5.class
+    status: GENERATED
+    reason: пересобранный класс игры, артефакт сборки живёт в out/fontbuild; лист L-FONT его проверяет
+  - path: java/
+    status: EXTERNAL
+    reason: 'код игры и библиотеки (JavaFX, FlatLaf, JFreeChart, steamworks4j): строки не переводятся,
+      ключи не трогаются'
+  - path: src/setup.c
+    status: IN_SCOPE
+    reason: исходник установщика, лист L-SETUP
+  - path: tools/embed_payload.py
+    status: IN_SCOPE
+    reason: вшивание перевода в установщик, лист L-EMBED
+  - path: tools/make_patch_jar.py
+    status: IN_SCOPE
+    reason: сборка пакета перевода из изменённых классов, лист L-PATCHJAR
+  - path: tools/check_installer.py
+    status: IN_SCOPE
+    reason: оракул состава установщика, лист L-CHECKINSTALLER
+  - path: tools/build_portable.sh
+    status: IN_SCOPE
+    reason: сборка портативного архива, лист L-PORTABLE
+  - path: tools/build_all.sh
+    status: DEPENDENCY
+    reason: 'служебный скрипт: собирает оба набора раздачи одной командой'
+  - path: tools/check_portable.py
+    status: IN_SCOPE
+    reason: оракул состава портативного архива, лист L-PORTABLE
+  - path: tools/portable/Установить-перевод.bat
+    status: IN_SCOPE
+    reason: скрипт установки для Windows, лист L-PORTABLE-SCRIPTS
+  - path: tools/portable/установить-перевод.sh
+    status: DEPENDENCY
+    reason: 'служебный файл: назван в what листа L-PORTABLE-SCRIPTS, проверяется тем же запуском'
+  - path: tools/portable/ПРОСТО-СКОПИРУЙ.txt
+    status: DEPENDENCY
+    reason: 'служебный файл: инструкция, назван в what листа L-PORTABLE и проверяется оракулом на кодировку'
+  - path: out/ru-patch.jar
+    status: GENERATED
+    reason: пакет перевода, артефакт сборки; его содержимое проверяет make_patch_jar.py
+oracles:
+- id: OR-VERIFY
+  command: bash tools/verify_launch.sh
+  command_status: VERIFIED_CMD
+  oracle_scope:
+    detects:
+    - игра запускается из лаунчера на JDK 25
+    - окно появляется, в логе нет Exception
+    - русский JAR собирается и все переводы в нём найдены
+    - пути к 68 примерам в справке не изменились
+    misses:
+    - полнота перевода отдельных меню
+    - терминология перевода
+    - обрезаются ли длинные подписи в Swing
+  negative_control:
+    method: MUTATION
+    target: временная копия JAR без единого перевода в /tmp
+    expected_failure: patch.py --verify возвращает код 1 и перечисляет непереведённые строки
+    executed: true
+    exit_code: 1
+    target_is_fixture: true
+    summary: 'tools/negative_control.sh: JAR из пустого словаря отвергнут, «ОРАКУЛ OR-VERIFY ГОДЕН»'
+  validated_at: '2026-10-06T21:44:56Z'
+  expires_at: '2027-04-04T21:44:56Z'
+- id: OR-SELFTEST
+  command: bash tools/negative_control.sh
+  command_status: VERIFIED_CMD
+  oracle_scope:
+    detects:
+    - ключ сохранения попал в словарь
+    - потерян перевод видимой строки
+    - разбор байткода сбился с границ инструкций
+    - классификация объявила ключ переводимым
+    misses:
+    - смысловая ошибка перевода
+    - обрезание длинных подписей
+  negative_control:
+    method: MUTATION
+    target: 'временные копии: испорченный отчёт классификации, испорченный словарь, завышенная длина опкода
+      invokevirtual'
+    expected_failure: каждая из трёх проверок возвращает код 1 на мутанте
+    executed: true
+    exit_code: 1
+    target_is_fixture: true
+    summary: 'tools/negative_control.sh: все три мутанта отвергнуты, «ОРАКУЛ OR-SELFTEST ГОДЕН» ×3'
+  validated_at: '2026-10-06T21:44:56Z'
+  expires_at: '2027-04-04T21:44:56Z'
+- id: OR-INSTALL
+  command: python3 tools/check_installer.py
+  command_status: VERIFIED_CMD
+  oracle_scope:
+    detects:
+    - внутри установщика лежит пакет перевода, а не файлы игры
+    - пакет перевода содержит ровно те классы, которые менял патч
+    - в пакете нет ни одного файла игры: графики, звука, шрифтов, настроек
+    - в пакете есть русские строки
+    - установщик помечен как собранный без перевода
+    misses:
+    - работает ли установщик на чужой машине Windows
+    - находит ли он папку игры в нестандартном месте
+  negative_control:
+    method: MUTATION
+    target: 'две копии установщика: с испорченным завершающим маркером и с пакетом, собранным из
+      целого JAR игры вместо перевода'
+    expected_failure: 'первая копия отвергнута как «собран без перевода», вторая — как «подозрительно
+      большой» и «внутри нет ru-patch.jar»'
+    executed: true
+    exit_code: 1
+    target_is_fixture: true
+    summary: 'оба мутанта отвергнуты: испорченный хвост и подмена пакета игрой'
+  validated_at: '2026-10-07T02:20:00Z'
+  expires_at: '2027-04-05T02:20:00Z'
+- id: OR-PORTABLE
+  command: python3 tools/check_portable.py
+  command_status: VERIFIED_CMD
+  oracle_scope:
+    detects:
+    - в портативном архиве нет ни одного файла игры
+    - пакет перевода совпадает с отчётом патча и содержит русские строки
+    - bat и инструкция сохранены в Windows-1251, иначе cmd и «Блокнот» их испортят
+    - в архиве нет переводов без скриптов установки
+    misses:
+    - читаемость инструкции человеком
+    - права на запуск sh после распаковки
+  negative_control:
+    method: MUTATION
+    target: 'три копии архива: без ru-patch.jar, с bat в UTF-8 и с JAR игры внутри'
+    expected_failure: каждая отвергнута с указанием причины
+    executed: true
+    exit_code: 1
+    target_is_fixture: true
+    summary: 'три мутанта отвергнуты: нет перевода, неверная кодировка, файл игры в архиве'
+  validated_at: '2026-10-07T17:22:00Z'
+  expires_at: '2027-04-05T17:22:00Z'
+stages:
+- name: 'Этап 1 — каркас: извлечение и классификация строк'
+  goal: Инструмент достаёт из JAR все константыUtf8 игры и надёжно отделяет видимый текст от ключей —
+    на этом стоят словарь и патч
+  done_when: python3 tools/extract.py > out/strings.json → код 0, out/strings.json содержит ключ forbidden_keys
+    и список видимых строк
+- name: 'Этап 2 — ядро: патч пула констант'
+  goal: patch.py переписывает строковые константы в .class с пересчётом длин, не ломая индексы пула
+  done_when: python3 tools/patch.py → код 0, out/SemiSim-2.2.1-ru.jar создан, python3 tools/patch.py --verify
+    → все замены найдены
+- name: Этап 3 — кириллица в шрифте 7x5
+  goal: Генератор глифов добавляет кириллицу в Font7x5, чтобы подписи зондов на поле не были пустыми прямоугольниками
+  done_when: python3 tools/font7x5.py → код 0, в out/font_report.json все 33 буквы А-Яа-яЁё присутствуют
+- name: Этап 4 — словарь перевода
+  goal: dict/translations.json переводит все видимые строки игры на русский и служит единственным источником
+    правды
+  done_when: python3 tools/check_dict.py → код 0, 0 непереведённых видимых строк, 0 переведённых ключей
+- name: Этап 5 — справка и проверка целиком
+  goal: Русская справка README.html/examples.html встроена в JAR, лаунчер и verify.sh доказывают работу
+    игры
+  done_when: bash tools/verify.sh → код 0, скриншот с русскими подписями, сохранение открывается
+- name: 'Этап 6 — сборка дистрибутива'
+  goal: tools/build_dist.sh собирает установщики для Windows и Linux и архив, чтобы раздача была одной
+    командой; состав архива проверяет оракул установщика
+  done_when: bash tools/build_dist.sh → код 0, dist/SemiSim-ru-setup.zip, проверка состава каждого
+    установщика зелёная
+  depends_on:
+  - Этап 5 — справка и проверка целиком
+- name: 'Этап 7 — установщик с переводом внутри и classpath вместо замены JAR'
+  goal: setup.exe несёт весь перевод внутри себя и включает его через classpath, не изменяя ни одного
+    файла игры — тогда Steam не возвращает оригинал и перевод можно раздавать публично
+  done_when: python3 tools/check_installer.py → код 0 и «установщик цел, внутри только перевод и справка»;
+    bash tools/build_dist.sh → dist/SemiSim-ru-setup.zip без файлов игры
+  depends_on:
+  - 'Этап 6 — сборка дистрибутива'
+- name: 'Этап 8 — портативный набор без установщика'
+  goal: архив рядом с установщиком — файлы перевода плюс скрипты копирования, чтобы перевод включался
+    и без запуска exe, и простым копированием файлов руками
+  done_when: 'bash tools/build_portable.sh → код 0 и строка «ИТОГ: архив цел»; распакованный архив
+    после запуска скрипта даёт рабочую игру на русском'
+  depends_on:
+  - 'Этап 7 — установщик с переводом внутри и classpath вместо замены JAR'
+leaves:
+- id: L-EXTRACT
+  what: tools/extract.py и tools/check_classify.py отделяют видимый текст от ключей; classfile.py и codescan.py
+    дают им разбор
+  target:
+    path: tools/extract.py
+  group: 'Этап 1 — каркас: извлечение и классификация строк'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: python3 tools/check_classify.py
+    expect_code: 0
+    expect_output: проверено ключей 119 надписей 72, нарушений нет
+    timeout_s: 300
+    oracle_ref: OR-SELFTEST
+    evidence:
+      command: python3 tools/check_classify.py
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Разобрать формат class-файла: пул констант, длина Utf8 в байтах'
+  - '[x] Реализовать разбор пула с учётом двухслотовых Long и Double'
+  - '[x] Доказать побайтовый round-trip на классе javac и классах игры'
+  - '[x] Отделить строковые литералы тега String от имён полей и дескрипторов'
+  - '[x] Найти ключи сравнением строк в байткоде, а не соседством в пуле'
+  - '[x] Проверить границы инструкций по всем 1031 методам игры'
+  - '[x] Закрепить классификацию оракулом с негативным контролем'
+  evidence:
+    command: python3 tools/check_classify.py
+    exit_code: 0
+    at: 2026-10-06 21:41:56+00:00
+    output: 'проверено ключей: 119, надписей: 72; РЕЗУЛЬТАТ зелёный'
+  next_action:
+    command: python3 tools/check_classify.py
+- id: L-DISASM
+  what: tools/check_disasm.py и tools/codescan.py доказывают, что байткод разбирается по границам инструкций
+  target:
+    path: tools/check_disasm.py
+  group: 'Этап 1 — каркас: извлечение и классификация строк'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: python3 tools/check_disasm.py
+    expect_code: 0
+    expect_output: методов 1031, с ошибкой границ 0
+    timeout_s: 300
+    oracle_ref: OR-SELFTEST
+    evidence:
+      command: python3 tools/check_disasm.py
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Сверить таблицу длин опкодов с JVMS 6.5'
+  - '[x] Разобрать tableswitch и lookupswitch с выравниванием'
+  - '[x] Учесть wide и multianewarray'
+  - '[x] Прогнать все методы игры и добиться нуля расхождений'
+  evidence:
+    command: python3 tools/check_disasm.py
+    exit_code: 0
+    at: 2026-10-06 21:41:56+00:00
+    output: методов проверено 1031, с ошибкой границ 0
+  next_action:
+    command: python3 tools/check_disasm.py
+- id: L-PATCH
+  what: tools/patch.py переписывает Utf8 в .class и собирает out/SemiSim-2.2.1-ru.jar средствами classfile.py
+  target:
+    path: tools/patch.py
+  group: 'Этап 2 — ядро: патч пула констант'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: python3 tools/patch.py --src x --dict dict/translations.json --out out/SemiSim-2.2.1-ru.jar
+      --verify
+    expect_code: 0
+    expect_output: переводов найдено 589, результат зелёный
+    timeout_s: 600
+    oracle_ref: OR-VERIFY
+    evidence:
+      command: python3 tools/patch.py --src x --dict dict/translations.json --out out/SemiSim-2.2.1-ru.jar
+        --verify
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Пересчитать длины Utf8 при замене, сохраняя длину в записи пула'
+  - '[x] Пересобрать .class с сохранением major/minor и атрибутов'
+  - '[x] Доказать побайтовый round-trip на классе javac и классах игры'
+  - '[x] Пересобрать JAR, заменяя только electrodynamics/*.class'
+  - '[x] Реализовать --verify: каждая замена найдена в готовом JAR'
+  - '[x] Найти и убрать значения констант Swing, ломавших игру при запуске'
+  next_action:
+    command: bash tools/verify.sh
+  evidence:
+    command: python3 tools/patch.py --src x --dict dict/translations.json --out out/SemiSim-2.2.1-ru.jar
+      --verify
+    exit_code: 0
+    at: 2026-10-06 21:41:56+00:00
+    output: переводов найдено в JAR 589, оставлено как есть 48, РЕЗУЛЬТАТ зелёный
+- id: L-FONT
+  what: tools/font7x5.py добавляет глифы кириллицы, пересобирая electrodynamics/util/Font7x5.class
+  target:
+    path: tools/font7x5.py
+  group: Этап 3 — кириллица в шрифте 7x5
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: python3 tools/font7x5.py
+    expect_code: 0
+    expect_output: латиница 95, кириллица 66, всего глифов 161, класс собран
+    timeout_s: 300
+    oracle_ref: OR-SELFTEST
+    evidence:
+      command: python3 tools/font7x5.py
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Понять назначение Font7x5: это фильтр ввода в Controls.keyTyped, а не отрисовка'
+  - '[x] Извлечь 95 латинских глифов из класса игры по формату 7 строк по 5 бит'
+  - '[x] Нарисовать 66 кириллических глифов в том же формате'
+  - '[x] Пересобрать класс целиком из исходника с прежним API'
+  - '[x] Понизить major версию до 50, как у остальных классов игры'
+  - '[x] Проверить чтение глифов прямо из готового JAR'
+  evidence:
+    command: python3 tools/font7x5.py
+    exit_code: 0
+    at: 2026-10-06 21:41:56+00:00
+    output: кириллических букв 66, найдено 66, отсутствует 0; латиница A true, цифра 0 true
+  next_action:
+    command: bash tools/build.sh
+- id: L-DICT
+  what: dict/translations.json переводит видимые строки; tools/check_dict.py проверяет словарь
+  target:
+    path: dict/translations.json
+  group: Этап 4 — словарь перевода
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: python3 tools/check_dict.py
+    expect_code: 0
+    expect_output: 589 видимых строк переведено, запрещённых ключей в словаре нет
+    timeout_s: 120
+    oracle_ref: OR-SELFTEST
+    evidence:
+      command: python3 tools/check_dict.py
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Перевести меню и пункты File/Edit/Tools/View/Graphics/Examples/Help'
+  - '[x] Перевести подписи панели: Timestep, Sim steps/frame, Scalar brightness, Vector field brightness'
+  - '[x] Перевести подписи параметров с единицами, единицы оставить как есть'
+  - '[x] Перевести названия видов View: (40+ строк вида View: ...)'
+  - '[x] Перевести сообщения об ошибках и диалогах подтверждения'
+  - '[x] Перевести названия материалов и названия кистей'
+  - '[x] Проверить, что в словаре нет строк-ключей'
+  evidence:
+    command: python3 tools/check_dict.py
+    exit_code: 0
+    at: 2026-10-06 21:41:56+00:00
+  next_action:
+    command: python3 tools/check_dict.py
+- id: L-HELP
+  what: help/README.html и help/examples.html переведены; tools/help_install.py кладёт их рядом с JAR
+  target:
+    path: help/README.html
+  group: Этап 5 — справка и проверка целиком
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: diff <(grep -o "app\.load(\"[^\"]*\"" help/examples.html) <(grep -o "app\.load(\"[^\"]*\""
+      "$APP/examples.html")
+    expect_code: 0
+    expect_output: пути к 68 примерам совпадают с оригиналом, вывод пуст
+    timeout_s: 120
+    oracle_ref: OR-VERIFY
+    evidence:
+      command: bash tools/build.sh
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Перевести README.html: заголовки, абзацы, списки, подписи, alt'
+  - '[x] Перевести examples.html: подписи карточек и заголовки разделов'
+  - '[x] Не трогать математику LaTeX и названия папок с примерами'
+  - '[x] Сверить 68 путей app.load с оригиналом'
+  - '[x] Выяснить, что справка ищется рядом с JAR через getRootFile, а не в архиве'
+  evidence:
+    command: diff <(grep -o "app.load(\"[^\"]*\"" help/examples.html) <(grep -o "app.load(\"[^\"]*\""
+      исходный/examples.html)
+    code: 0
+    output: ИДЕНТИЧНЫ — пути не поехали, 68 записей
+    at: 2026-10-06 21:41:56+00:00
+  next_action:
+    command: bash tools/build.sh
+- id: L-LAUNCHER
+  what: SemiSim-ru.sh запускает игру; tools/verify_launch.sh это проверяет, tools/negative_control.sh
+    ловит испорченные данные
+  target:
+    path: SemiSim-ru.sh
+  group: Этап 5 — справка и проверка целиком
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    command: bash tools/verify_launch.sh
+    expect_code: 0
+    expect_output: процесс жив yes, исключений 0
+    timeout_s: 300
+    oracle_ref: OR-VERIFY
+    evidence:
+      command: bash tools/verify_launch.sh
+      exit_code: 0
+      at: '2026-10-06T21:42:11Z'
+  steps:
+  - '[x] Найти JDK 25 и объяснить, почему JDK 21 не подходит'
+  - '[x] Задать SteamAppId=4864110, иначе игра завершается с кодом 0'
+  - '[x] Искать JDK по домашнему каталогу владельца, а не по $HOME'
+  - '[x] Проверить запуск лаунчера живым прогоном на Xvfb'
+  evidence:
+    command: bash tools/build.sh
+    exit_code: 0
+    at: 2026-10-06 21:41:56+00:00
+    output: 'игра запустилась, Exception в логе: 0, заголовок окна «Симулятор полупроводников Брэндона»'
+  next_action:
+    command: bash tools/build.sh
+- id: L-CLASSFILE
+  target:
+    path: tools/classfile.py
+  group: 'Этап 1 — каркас: извлечение и классификация строк'
+  what: tools/classfile.py разбирает и пересобирает пул констант .class без внешних зависимостей
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-SELFTEST
+    command: python3 tools/check_disasm.py
+    expect_code: 0
+    timeout_s: 300
+    expect_output: методов 1031, с ошибкой границ 0
+    evidence:
+      command: python3 tools/check_disasm.py
+      exit_code: 0
+      at: '2026-10-06T21:44:56Z'
+  steps:
+  - '[x] Разобрать формат class-файла и длины записей пула'
+  - '[x] Сохранять длину Utf8 вместе с байтами при пересборке'
+  - '[x] Доказать побайтовый round-trip на классе javac и классах игры'
+  next_action:
+    command: python3 tools/check_disasm.py
+- id: L-CODESCAN
+  target:
+    path: tools/codescan.py
+  group: 'Этап 1 — каркас: извлечение и классификация строк'
+  what: tools/codescan.py разбирает инструкции байткода и находит строки, участвующие в сравнении
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-SELFTEST
+    command: python3 tools/check_disasm.py
+    expect_code: 0
+    timeout_s: 300
+    expect_output: методов 1031, с ошибкой границ 0
+    evidence:
+      command: python3 tools/check_disasm.py
+      exit_code: 0
+      at: '2026-10-06T21:44:56Z'
+  steps:
+  - '[x] Сверить таблицу длин опкодов с JVMS 6.5'
+  - '[x] Разобрать tableswitch и lookupswitch с выравниванием'
+  - '[x] Учесть wide и multianewarray'
+  - '[x] Ограничить поиск ключей аргументом сравнения, а не всем методом'
+  next_action:
+    command: python3 tools/check_disasm.py
+- id: L-CLASSIFY
+  target:
+    path: tools/check_classify.py
+  group: 'Этап 1 — каркас: извлечение и классификация строк'
+  what: tools/check_classify.py охраняет решение классификации оракулом с негативным контролем
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-SELFTEST
+    command: python3 tools/check_classify.py
+    expect_code: 0
+    timeout_s: 120
+    expect_output: проверено ключей 129, надписей 72, нарушений нет
+    evidence:
+      command: python3 tools/check_classify.py
+      exit_code: 0
+      at: '2026-10-06T21:44:56Z'
+  steps:
+  - '[x] Перечислить ключи, которые нельзя переводить'
+  - '[x] Перечислить надписи, которые обязаны быть переводимыми'
+  - '[x] Добавить негативный контроль на испорченных данных'
+  next_action:
+    command: python3 tools/check_classify.py
+- id: L-CHECKDICT
+  target:
+    path: tools/check_dict.py
+  group: Этап 4 — словарь перевода
+  what: 'tools/check_dict.py проверяет словарь перед сборкой: полнота, ключи, разметка, символы'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-SELFTEST
+    command: python3 tools/check_dict.py
+    expect_code: 0
+    timeout_s: 120
+    expect_output: 589 видимых строк переведено, нарушений нет
+    evidence:
+      command: python3 tools/check_dict.py
+      exit_code: 0
+      at: '2026-10-06T21:44:56Z'
+  steps:
+  - '[x] Проверять, что в словаре нет строк-ключей'
+  - '[x] Проверять, что переведены все видимые строки'
+  - '[x] Проверять сохранность HTML-разметки и физических символов'
+  next_action:
+    command: python3 tools/check_dict.py
+- id: L-HELPINSTALL
+  target:
+    path: tools/help_install.py
+  group: Этап 5 — справка и проверка целиком
+  what: tools/help_install.py кладёт переведённые файлы справки в папку запуска игры
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-VERIFY
+    command: bash tools/build.sh
+    expect_code: 0
+    timeout_s: 900
+    expect_output: справка установлена в out
+    evidence:
+      command: bash tools/build.sh
+      exit_code: 0
+      at: '2026-10-06T21:44:56Z'
+  steps:
+  - '[x] Выяснить, что справка ищется через getRootFile рядом с JAR'
+  - '[x] Копировать README.html и examples.html в папку запуска'
+  - '[x] Не трогать LICENSE.txt'
+  next_action:
+    command: bash tools/build.sh
+- id: L-EXAMPLES
+  target:
+    path: help/examples.html
+  group: Этап 5 — справка и проверка целиком
+  what: 'help/examples.html переведён без смены путей app.load: игра грузит по ним схемы'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-VERIFY
+    command: bash tools/build.sh
+    expect_code: 0
+    timeout_s: 900
+    expect_output: пути к 68 примерам совпадают с оригиналом
+    evidence:
+      command: bash tools/build.sh
+      exit_code: 0
+      at: '2026-10-06T21:44:56Z'
+  steps:
+  - '[x] Перевести подписи карточек и заголовки разделов'
+  - '[x] Сверить 68 вызовов app.load с оригиналом'
+  next_action:
+    command: bash tools/build.sh
+- id: L-DIST
+  target:
+    path: tools/build_dist.sh
+  group: 'Этап 6 — сборка дистрибутива'
+  what: 'tools/build_dist.sh собирает установщики и архив и не пропускает в них файлы игры'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-INSTALL
+    command: bash tools/build_dist.sh
+    expect_code: 0
+    timeout_s: 300
+    expect_output: 'архив dist/SemiSim-ru-setup.zip, проверка состава установщиков зелёная'
+    evidence:
+      command: bash tools/build_dist.sh
+      exit_code: 0
+      at: '2026-10-07T02:20:00Z'
+  steps:
+  - '[x] Собирать setup.exe, setup-32.exe и сборку для Linux'
+  - '[x] Вшивать перевод в каждый из них'
+  - '[x] Проверять состав каждого установщика оракулом'
+  - '[x] Складывать инструкцию в архив'
+  next_action:
+    command: bash tools/build_dist.sh
+- id: L-PORTABLE
+  target:
+    path: tools/build_portable.sh
+  group: 'Этап 8 — портативный набор без установщика'
+  what: 'tools/build_portable.sh собирает архив с переводом и справкой; tools/portable/ПРОСТО-СКОПИРУЙ.txt
+    объясняет установку, тексты сохраняются в Windows-1251'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-PORTABLE
+    command: python3 tools/check_portable.py
+    expect_code: 0
+    timeout_s: 300
+    expect_output: 'архив цел, внутри только перевод, справка и скрипты'
+    evidence:
+      command: python3 tools/check_portable.py
+      exit_code: 0
+      at: '2026-10-07T17:22:00Z'
+  steps:
+  - '[x] Положить в архив пакет перевода, русскую справку и инструкцию'
+  - '[x] Добавить скрипты установки для Windows и Linux'
+  - '[x] Сохранить bat и txt в Windows-1251, cmd портит UTF-8'
+  - '[x] Проверять состав архива оракулом с отрицательным контролем'
+  - '[x] Не стирать портативный архив при сборке установщика'
+  next_action:
+    command: bash tools/build_portable.sh
+- id: L-PORTABLE-CHECK
+  target:
+    path: tools/check_portable.py
+  group: 'Этап 8 — портативный набор без установщика'
+  what: 'tools/check_portable.py доказывает, что в архиве только перевод, и обязан падать на
+    испорченном архиве'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-PORTABLE
+    command: python3 tools/check_portable.py
+    expect_code: 0
+    timeout_s: 300
+    expect_output: 'архив цел, внутри только перевод, справка и скрипты'
+    evidence:
+      command: python3 tools/check_portable.py
+      exit_code: 0
+      at: '2026-10-07T17:22:00Z'
+  steps:
+  - '[x] Отвергать архив без пакета перевода или состава патча'
+  - '[x] Отвергать файлы игры и слишком большой архив'
+  - '[x] Проверять кодировку Windows-1251 у bat и инструкции'
+  - '[x] Сделать три отрицательных контроля: нет перевода, UTF-8 вместо 1251, JAR игры внутри'
+  next_action:
+    command: python3 tools/check_portable.py
+- id: L-PORTABLE-SCRIPTS
+  target:
+    path: tools/portable/Установить-перевод.bat
+  group: 'Этап 8 — портативный набор без установщика'
+  what: 'tools/portable/Установить-перевод.bat и tools/portable/установить-перевод.sh копируют пакет
+    перевода и правят classpath в SemiSim.cfg без exe-установщика'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-PORTABLE
+    command: python3 tools/check_portable.py
+    expect_code: 0
+    timeout_s: 300
+    expect_output: 'архив цел; скрипты проверены на копии игры и под Wine'
+    evidence:
+      command: python3 tools/check_portable.py
+      exit_code: 0
+      at: '2026-10-07T17:22:00Z'
+  steps:
+  - '[x] Искать папку игры в типовых местах Steam, а при неудаче просить перетащить папку'
+  - '[x] Копировать перевод и справку, оригиналы справки — как .orig'
+  - '[x] Вставлять строку classpath после заголовка [Application], иначе лаунчер её не прочтёт'
+  - '[x] Фильтровать строку перевода подстановкой, а не findstr: ключ /v работает по-разному'
+  - '[x] Не задваивать строку при повторном запуске'
+  - '[x] Проверить bat под Wine и sh на копии игры'
+  next_action:
+    command: bash tools/build_portable.sh
+- id: L-SETUP
+  target:
+    path: src/setup.c
+  group: 'Этап 7 — установщик с переводом внутри и classpath вместо замены JAR'
+  what: 'src/setup.c кладёт пакет перевода рядом с игрой и прописывает его первым в classpath,
+    файлы игры не трогает, умеет откат'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-INSTALL
+    command: bash tools/build_dist.sh
+    expect_code: 0
+    timeout_s: 300
+    expect_output: 'установщик цел, внутри только перевод и справка; архив dist/SemiSim-ru-setup.zip;
+      подсистема PE = 2 (окно, а не консоль)'
+    evidence:
+      command: bash tools/build_dist.sh
+      exit_code: 0
+      at: '2026-10-07T02:20:00Z'
+  steps:
+  - '[x] Найти игру автопоиском по библиотекам Steam и по своей папке'
+  - '[x] Спрашивать подтверждение окном, а не в консоли'
+  - '[x] Копировать пакет перевода, не заменяя JAR игры'
+  - '[x] Дописывать classpath один раз, чтобы не плодить строки'
+  - '[x] Убирать classpath и пакет при повторном запуске'
+  - '[x] Проверить установку и откат на копии игры, сверить sha256 JAR'
+  - '[x] Собирать установщик как приложение с окном (-mwindows), а не консоль'
+  - '[x] Перевести диалоги на MessageBoxW с конверсией UTF-8, иначе русский текст испорчен'
+  - '[x] Запустить установщик под Wine и убедиться, что окно есть, а консоли нет'
+  next_action:
+    command: bash tools/build_dist.sh
+- id: L-PATCHJAR
+  target:
+    path: tools/make_patch_jar.py
+  group: 'Этап 7 — установщик с переводом внутри и classpath вместо замены JAR'
+  what: 'tools/make_patch_jar.py собирает out/ru-patch.jar только из изменённых классов, без файлов игры,
+    и делает это воспроизводимо'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-INSTALL
+    command: python3 tools/make_patch_jar.py
+    expect_code: 0
+    timeout_s: 300
+    expect_output: 'классов 55, с русскими строками 48, размер около 265 КБ'
+    evidence:
+      command: python3 tools/make_patch_jar.py
+      exit_code: 0
+      at: '2026-10-07T02:21:00Z'
+  steps:
+  - '[x] Взять список изменённых классов из отчёта патча'
+  - '[x] Собрать zip только из этих классов'
+  - '[x] Запретить в пакете графику, звук, шрифты и настройки'
+  - '[x] Проверить, что русские строки на месте'
+  - '[x] Зафиксировать время входа, чтобы две сборки совпадали побайтно'
+  next_action:
+    command: python3 tools/make_patch_jar.py
+- id: L-EMBED
+  target:
+    path: tools/embed_payload.py
+  group: 'Этап 7 — установщик с переводом внутри и classpath вместо замены JAR'
+  what: 'tools/embed_payload.py вшивает пакет перевода и русскую справку внутрь установщика блоком,
+    который тот находит в своём хвосте'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-INSTALL
+    command: python3 tools/check_installer.py
+    expect_code: 0
+    timeout_s: 120
+    expect_output: 'установщик цел, внутри только перевод и справка'
+    evidence:
+      command: python3 tools/check_installer.py
+      exit_code: 0
+      at: '2026-10-07T02:20:00Z'
+  steps:
+  - '[x] Выбрать формат блока: маркер, число файлов, записи имя и байты'
+  - '[x] Добавить в хвост завершающий маркер и смещение блока'
+  - '[x] Научить установщик читать собственный файл по этому смещению'
+  - '[x] Встроить инструкцию по установке и откату внутрь установщика'
+  next_action:
+    command: python3 tools/check_installer.py
+- id: L-CHECKINSTALLER
+  target:
+    path: tools/check_installer.py
+  group: 'Этап 7 — установщик с переводом внутри и classpath вместо замены JAR'
+  what: 'tools/check_installer.py доказывает, что внутри установщика только перевод, и обязан падать
+    на испорченном установщике'
+  task_state: DONE
+  coverage: IN_SCOPE
+  verification:
+    state: PASSED
+    command_status: VERIFIED_CMD
+    oracle_ref: OR-INSTALL
+    command: python3 tools/check_installer.py --installer dist/setup.exe
+    expect_code: 0
+    timeout_s: 120
+    expect_output: 'классов в пакете 55, патч менял 55, установщик цел'
+    evidence:
+      command: python3 tools/check_installer.py --installer dist/setup.exe
+      exit_code: 0
+      at: '2026-10-07T02:20:00Z'
+  steps:
+  - '[x] Читать блок так же, как это делает установщик'
+  - '[x] Сверить состав пакета с отчётом патча'
+  - '[x] Запретить файлы игры по расширению'
+  - '[x] Отказать, если установщик подозрительно большой'
+  - '[x] Сделать два отрицательных контроля: испорченный хвост и подмена пакета игрой'
+  next_action:
+    command: python3 tools/check_installer.py
+dead_ends: []
+handover:
+  known_red: []
+  release_gate:
+    applies_to: TASK
+    task_id: semisim-ru-localization-2026-10-06
+    coverage_complete: false
+    coverage_gap: 'Переведены все 589 строк, признанных видимыми, но полнота перевода вложенных окон не
+      заявляется: она проверяется только живым запуском со скриншотами, а не статически.'
+  next_action:
+    command: bash tools/build_dist.sh
+    expected: 'код 0, «ИТОГ: установщик цел, внутри только перевод и справка» и архив dist/SemiSim-ru-setup.zip'
+  handing_over_task: 'Задача выполнена: семь этапов закрыты и проверены. Готов setup.exe (479 КБ) с переводом внутри:
+    он кладёт рядом с игрой пакет ru-patch.jar на 55 изменённых классов и прописывает его первым в classpath,
+    файлы игры не изменяются. Живой запуск с переводом проверен: окна «Настройки», «Редактор материалов»,
+    «Расширенные настройки». Осталось решение владельца: формат публикации в обсуждении Steam и нужен ли
+    переключатель языка.'
+  ask:
+  - question: Выкладывать в обсуждение Steam готовый JAR-патч или скрипт установки?
+    why: Steam не пропускает исполняемые файлы в обсуждения; формат публикации задаёт владелец
+    who: user
+  - question: Нужен ли переключатель языка русский/английский или только русский?
+    why: переключатель требует второго словаря и пункта меню — это отдельная работа
+    who: user
+  blockers: []
+validator:
+  version: dod-check (локальная копия ~/.config/opencode/bin/dod-check)
+  hash: sha256:d25bc53f8deebd92
+  self_test:
+    status: PASSED
+    command: /home/isako/.config/opencode/bin/dod-check --self-test
+    output: 'SELF-TEST: зелёный (46 мутантов)'
+    at: '2026-10-06T21:45:59Z'

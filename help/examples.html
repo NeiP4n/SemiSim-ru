@@ -1,0 +1,443 @@
+
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Примеры</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f9f9f9;
+    }
+
+    .container {
+      font-family: Arial, sans-serif;
+      margin: 28px;
+    }
+
+    h1,
+    h2 {
+      color: #2c3e50;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 300px);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .card a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: bold;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+
+
+    <div class="section">
+      <h2>Электростатика</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Electrostatics/Dipole potential.png">
+          <a href="" onclick='app.load("examples/Electrostatics/Dipole potential.semisim");'>Потенциал диполя</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Electrostatics/Dipole.png">
+          <a href="" onclick='app.load("examples/Electrostatics/Dipole.semisim");'>Диполь</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Electrostatics/Galvani potential.png">
+          <a href="" onclick='app.load("examples/Electrostatics/Galvani potential.semisim");'>Потенциал Гальвани</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Electrostatics/Mirror charges.png">
+          <a href="" onclick='app.load("examples/Electrostatics/Mirror charges.semisim");'>Зеркальные заряды</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Electrostatics/Shielding 2.png">
+          <a href="" onclick='app.load("examples/Electrostatics/Shielding 2.semisim");'>Экранирование 2</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Electrostatics/Shielding.png">
+          <a href="" onclick='app.load("examples/Electrostatics/Shielding.semisim");'>Экранирование</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Схемы</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Boost converter.png">
+          <a href="" onclick='app.load("examples/Circuits/Boost converter.semisim");'>Повышающий преобразователь</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Bridge rectifier.png">
+          <a href="" onclick='app.load("examples/Circuits/Bridge rectifier.semisim");'>Мостовой выпрямитель</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Capacitors.png">
+          <a href="" onclick='app.load("examples/Circuits/Capacitors.semisim");'>Конденсаторы</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Circuit E and B.png">
+          <a href="" onclick='app.load("examples/Circuits/Circuit E and B.semisim");'>Схема E и B</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Inductor.png">
+          <a href="" onclick='app.load("examples/Circuits/Inductor.semisim");'>Катушка индуктивности</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Inductors.png">
+          <a href="" onclick='app.load("examples/Circuits/Inductors.semisim");'>Катушки индуктивности</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Maze.png">
+          <a href="" onclick='app.load("examples/Circuits/Maze.semisim");'>Лабиринт</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Ohm's law.png">
+          <a href="" onclick='app.load("examples/Circuits/Ohm's law.semisim");'>Закон Ома</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/RC circuit.png">
+          <a href="" onclick='app.load("examples/Circuits/RC circuit.semisim");'>RC-схема</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Resistor.png">
+          <a href="" onclick='app.load("examples/Circuits/Resistor.semisim");'>Резистор</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Resonator E and B.png">
+          <a href="" onclick='app.load("examples/Circuits/Resonator E and B.semisim");'>Резонатор E и B</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Resonator cavity.png">
+          <a href="" onclick='app.load("examples/Circuits/Resonator cavity.semisim");'>Объёмный резонатор</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Simple circuit.png">
+          <a href="" onclick='app.load("examples/Circuits/Simple circuit.semisim");'>Простая схема</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Speed of light.png">
+          <a href="" onclick='app.load("examples/Circuits/Speed of light.semisim");'>Скорость света</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Circuits/Transformer.png">
+          <a href="" onclick='app.load("examples/Circuits/Transformer.semisim");'>Трансформатор</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Волны</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Waves/Antennas.png">
+          <a href="" onclick='app.load("examples/Waves/Antennas.semisim");'>Антенны</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Waves/Conductivity.png">
+          <a href="" onclick='app.load("examples/Waves/Conductivity.semisim");'>Проводимость</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Waves/Dipole radiation.png">
+          <a href="" onclick='app.load("examples/Waves/Dipole radiation.semisim");'>Дипольное излучение</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Waves/Double slit.png">
+          <a href="" onclick='app.load("examples/Waves/Double slit.semisim");'>Двойная щель</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Физика полупроводников</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/Brownian motion.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/Brownian motion.semisim");'>Броуновское движение</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/Diffusion.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/Diffusion.semisim");'>Диффузия</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/Drift.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/Drift.semisim");'>Дрейф</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/Generation.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/Generation.semisim");'>Генерация</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/PN junctions.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/PN junctions.semisim");'>Переходы PN</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/Recombination.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/Recombination.semisim");'>Рекомбинация</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Semiconductor physics/Saturation velocity.png">
+          <a href="" onclick='app.load("examples/Semiconductor physics/Saturation velocity.semisim");'>Скорость насыщения</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Диоды</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Diodes/Direct and indirect gap.png">
+          <a href="" onclick='app.load("examples/Diodes/Direct and indirect gap.semisim");'>Прямой и косвенный переход</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/LEDs.png">
+          <a href="" onclick='app.load("examples/Diodes/LEDs.semisim");'>LED</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/Light emitting diode.png">
+          <a href="" onclick='app.load("examples/Diodes/Light emitting diode.semisim");'>Светоизлучающий диод</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/PIN diode.png">
+          <a href="" onclick='app.load("examples/Diodes/PIN diode.semisim");'>p-i-n диод</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/PN diode.png">
+          <a href="" onclick='app.load("examples/Diodes/PN diode.semisim");'>Диод PN</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/Photodiode.png">
+          <a href="" onclick='app.load("examples/Diodes/Photodiode.semisim");'>Фотодиод</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/Schottky diode.png">
+          <a href="" onclick='app.load("examples/Diodes/Schottky diode.semisim");'>Диод Шоттки</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Diodes/Varactor.png">
+          <a href="" onclick='app.load("examples/Diodes/Varactor.semisim");'>Варикап</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>BJT</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/BJTs/NPN bipolar transistor.png">
+          <a href="" onclick='app.load("examples/BJTs/NPN bipolar transistor.semisim");'>Биполярный транзистор NPN</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/BJTs/PNP bipolar transistor.png">
+          <a href="" onclick='app.load("examples/BJTs/PNP bipolar transistor.semisim");'>Биполярный транзистор PNP</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/BJTs/Realistic BJT.png">
+          <a href="" onclick='app.load("examples/BJTs/Realistic BJT.semisim");'>Реалистичный BJT</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>MOSFET</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/MOSFETs/N-channel MOSFET dep.png">
+          <a href="" onclick='app.load("examples/MOSFETs/N-channel MOSFET dep.semisim");'>N-канальный MOSFET обеднения</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/MOSFETs/N-channel MOSFET enh.png">
+          <a href="" onclick='app.load("examples/MOSFETs/N-channel MOSFET enh.semisim");'>N-канальный MOSFET усиления</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/MOSFETs/P-channel MOSFET dep.png">
+          <a href="" onclick='app.load("examples/MOSFETs/P-channel MOSFET dep.semisim");'>P-канальный MOSFET обеднения</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/MOSFETs/P-channel MOSFET enh.png">
+          <a href="" onclick='app.load("examples/MOSFETs/P-channel MOSFET enh.semisim");'>P-канальный MOSFET усиления</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/MOSFETs/Realistic MOSFET.png">
+          <a href="" onclick='app.load("examples/MOSFETs/Realistic MOSFET.semisim");'>Реалистичный MOSFET</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>JFET</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/JFETs/N-channel JFET.png">
+          <a href="" onclick='app.load("examples/JFETs/N-channel JFET.semisim");'>N-канальный JFET</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/JFETs/P-channel JFET.png">
+          <a href="" onclick='app.load("examples/JFETs/P-channel JFET.semisim");'>P-канальный JFET</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/JFETs/Realistic JFET.png">
+          <a href="" onclick='app.load("examples/JFETs/Realistic JFET.semisim");'>Реалистичный JFET</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/JFETs/Static electricity detector.png">
+          <a href="" onclick='app.load("examples/JFETs/Static electricity detector.semisim");'>Детектор статического электричества</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Прочие полупроводники</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Misc semiconductors/Darlington transistor.png">
+          <a href="" onclick='app.load("examples/Misc semiconductors/Darlington transistor.semisim");'>Транзистор Дарлингтона</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Misc semiconductors/IGBT.png">
+          <a href="" onclick='app.load("examples/Misc semiconductors/IGBT.semisim");'>IGBT</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Misc semiconductors/MESFET.png">
+          <a href="" onclick='app.load("examples/Misc semiconductors/MESFET.semisim");'>MESFET</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Misc semiconductors/SCR.png">
+          <a href="" onclick='app.load("examples/Misc semiconductors/SCR.semisim");'>SCR</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Misc semiconductors/Thermoelectric cooler.png">
+          <a href="" onclick='app.load("examples/Misc semiconductors/Thermoelectric cooler.semisim");'>Термоэлектрический холодильник</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Цифровая логика</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Digital logic/CMOS inverter.png">
+          <a href="" onclick='app.load("examples/Digital logic/CMOS inverter.semisim");'>Инвертор CMOS</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Digital logic/DRAM cell.png">
+          <a href="" onclick='app.load("examples/Digital logic/DRAM cell.semisim");'>Ячейка DRAM</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Digital logic/NMOS NOT gate.png">
+          <a href="" onclick='app.load("examples/Digital logic/NMOS NOT gate.semisim");'>Логический элемент НЕ на NMOS</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Digital logic/NMOS latch.png">
+          <a href="" onclick='app.load("examples/Digital logic/NMOS latch.semisim");'>Защёлка на NMOS</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Digital logic/NMOS ring oscillator.png">
+          <a href="" onclick='app.load("examples/Digital logic/NMOS ring oscillator.semisim");'>Кольцевой генератор на NMOS</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="section">
+      <h2>Тест</h2>
+      <div class="example-grid">
+
+        <div class="card">
+          <img src="images/thumbnails/Test/Ariel cat.png">
+          <a href="" onclick='app.load("examples/Test/Ariel cat.semisim");'>Кот Ариэля</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Test/Art.png">
+          <a href="" onclick='app.load("examples/Test/Art.semisim");'>Арт</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Test/Font.png">
+          <a href="" onclick='app.load("examples/Test/Font.semisim");'>Шрифт</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Test/Ground.png">
+          <a href="" onclick='app.load("examples/Test/Ground.semisim");'>Земля</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Test/Log test.png">
+          <a href="" onclick='app.load("examples/Test/Log test.semisim");'>Тест журнала</a>
+        </div>
+        <div class="card">
+          <img src="images/thumbnails/Test/Palette.png">
+          <a href="" onclick='app.load("examples/Test/Palette.semisim");'>Палитра</a>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</body>
+</html>
