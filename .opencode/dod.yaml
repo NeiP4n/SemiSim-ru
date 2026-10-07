@@ -14,7 +14,7 @@ versions:
   source: pom.xml в META-INF/maven/SemiSim/SemiSim/pom.xml
 repo_state:
   branch: main
-  head: e1afdbda061307ce70664d27dfd6202d4b857eeb
+  head: 32322d932a61223652fd5f26a6b3325db17a9169
   dirty: 0
   remote: https://github.com/NeiP4n/SemiSim-ru.git
 task_id: semisim-ru-localization-2026-10-06
