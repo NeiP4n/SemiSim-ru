@@ -1,8 +1,8 @@
 @echo off
-rem Установка русского перевода SemiSim без установщика.
-rem Копирует пакет перевода в папку игры и прописывает его первым в classpath.
-rem Файлы игры не заменяются: SemiSim-2.2.1.jar остаётся оригинальным.
-rem Запускается двойным кликом. Если игру не нашли — перетащите её папку на этот файл.
+rem Russian translation installer for SemiSim, Windows, no exe needed.
+rem Copies the translation next to the game and puts it first on the classpath.
+rem No game file is replaced: SemiSim-2.2.1.jar stays original.
+rem Double-click to run. If the game is not found, drag its folder onto this file.
 chcp 1251 >nul
 setlocal EnableDelayedExpansion
 
@@ -29,38 +29,39 @@ if not defined GAME (
 
 if not defined GAME (
   echo.
-  echo   Папка игры не найдена.
+  echo   Game folder not found.
   echo.
-  echo   Сделайте так: скопируйте эту папку в папку игры SemiSim
-  echo   и запустите файл оттуда. Либо перетащите папку игры на этот файл.
+  echo   Either copy this whole folder into the SemiSim game folder and run
+  echo   it again, or drag the game folder onto this file.
   echo.
   pause
   exit /b 1
 )
 
 echo.
-echo   Папка игры: %GAME%
+echo   Game folder: %GAME%
 echo.
-echo   Будет скопировано:
-echo     - ru-patch.jar (перевод, 265 КБ) рядом с SemiSim-2.2.1.jar
-echo     - README.html и examples.html (русская справка)
-echo   И в SemiSim.cfg появится одна строка: app.classpath=$APPDIR/ru-patch.jar
+echo   What will be copied:
+echo     - ru-patch.jar (translation, 265 KB) next to SemiSim-2.2.1.jar
+echo     - README.html and examples.html (Russian help pages)
+echo   and one line will be added to SemiSim.cfg:
+echo     app.classpath=$APPDIR/ru-patch.jar
 echo.
-echo   Файлы игры не заменяются. Оригиналы справки сохранятся как .orig
+echo   No game file is replaced. Original help pages are kept as .orig
 echo.
-set /p ANS="   Продолжить? (Y/N) "
+set /p ANS="   Continue? (Y/N) "
 if /i not "%ANS%"=="Y" (
-  echo   Отменено, ничего не изменено.
+  echo   Cancelled, nothing was changed.
   pause
   exit /b 0
 )
 
 set "APPDIR=%GAME%\lib\app"
 
-rem 1. пакет перевода
+rem 1. translation package
 copy /y "%SELF%ru-patch.jar" "%APPDIR%\ru-patch.jar" >nul || goto :err
 
-rem 2. русская справка, с бэкапом оригинала
+rem 2. Russian help pages, keeping a backup of the originals
 for %%H in (README.html examples.html) do (
   if exist "%APPDIR%\%%H" if not exist "%APPDIR%\%%H.orig" (
     copy /y "%APPDIR%\%%H" "%APPDIR%\%%H.orig" >nul
@@ -68,40 +69,37 @@ for %%H in (README.html examples.html) do (
   copy /y "%SELF%%%H" "%APPDIR%\%%H" >nul || goto :err
 )
 
-rem 3. classpath: наш перевод должен грузиться раньше игрового.
-rem Наша строка идёт первой в файле — значит она первая и в classpath.
-rem Порядок строк задаёт порядок загрузки классов, а не сам факт строки.
+rem 3. classpath: our translation has to load before the game's own.
+rem It goes right after the [Application] header: a line placed before the
+rem header would fall outside the section and the jpackage launcher would
+rem not read it. Lines are filtered by substring substitution, not findstr,
+rem because findstr's /v behaves differently in different cmd hosts (Wine
+rem ignores it outright) and the old line would be left in the file twice.
 set "CFG=%APPDIR%\SemiSim.cfg"
 if not exist "%CFG%" goto :err
 
 set "TMP=%CFG%.ru-tmp"
 if exist "%TMP%" del "%TMP%"
-rem наш перевод идёт сразу после заголовка секции [Application]: строка
-rem до заголовка оказалась бы вне секции и jpackage-лаунчер её не прочтёт
 > "%TMP%" echo [Application]
 >> "%TMP%" echo app.classpath=$APPDIR/ru-patch.jar
-rem Фильтруем построчно подстановкой подстроки, а не findstr: у findstr
-rem ключ /v с литеральным поиском ведёт себя по-разному в разных cmd
-rem (в Wine он вовсе игнорируется), и старая строка перевода оставалась бы
-rem в файле дважды. Проверено: подстановка работает одинаково везде.
 for /f "usebackq delims=" %%L in ("%CFG%") do call :copyline "%%L"
 if not exist "%TMP%" goto :err
 move /y "%TMP%" "%CFG%" >nul
 if errorlevel 1 goto :err
 
 echo.
-echo   Готово. Перевод включён.
+echo   Done. The translation is active.
 echo.
-echo   Запустите игру как обычно, через Steam.
-echo   Вернуть английский: удалите из SemiSim.cfg строку
-echo   app.classpath=...ru-patch.jar и удалите файл ru-patch.jar
+echo   Start the game through Steam as usual.
+echo   To go back to English: delete the ru-patch.jar line from SemiSim.cfg
+echo   and delete the file ru-patch.jar
 echo.
 pause
 exit /b 0
 
 :copyline
-rem заголовок секции и строку с нашим переводом пропускаем: они уже
-rem записаны выше, иначе при повторном запуске задвоятся
+rem skip the section header and our own line: both are already written above,
+rem otherwise a second run would duplicate them
 set "LINE=%~1"
 if /i "!LINE!"=="[Application]" goto :eof
 if not "!LINE:ru-patch.jar=!"=="!LINE!" goto :eof
@@ -110,8 +108,8 @@ goto :eof
 
 :err
 echo.
-echo   Не получилось. Проверьте, что папка игры не занята игрой,
-echo   и что в ней есть файл lib\app\SemiSim.cfg
+echo   Failed. Check that the game is not running and that
+echo   lib\app\SemiSim.cfg exists in that folder.
 echo.
 pause
 exit /b 1

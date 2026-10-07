@@ -96,13 +96,13 @@ static int copy_file(const char *from, const char *to)
     snprintf(tmp, sizeof tmp, "%s.tmp", to);
     in = fopen(from, "rb");
     if (!in) {
-        fprintf(stderr, "не удалось прочитать %s\n", from);
+        fprintf(stderr, "cannot read %s\n", from);
         return 0;
     }
     out = fopen(tmp, "wb");
     if (!out) {
         fclose(in);
-        fprintf(stderr, "не удалось записать %s\n", tmp);
+        fprintf(stderr, "cannot write %s\n", tmp);
         return 0;
     }
     while ((n = fread(buffer, 1, sizeof buffer, in)) > 0) {
@@ -110,7 +110,7 @@ static int copy_file(const char *from, const char *to)
             fclose(in);
             fclose(out);
             remove(tmp);
-            fprintf(stderr, "ошибка записи %s\n", tmp);
+            fprintf(stderr, "write error %s\n", tmp);
             return 0;
         }
     }
@@ -122,7 +122,7 @@ static int copy_file(const char *from, const char *to)
     remove(to);
     if (rename(tmp, to) != 0) {
         remove(tmp);
-        fprintf(stderr, "не удалось заменить %s\n", to);
+        fprintf(stderr, "cannot replace %s\n", to);
         return 0;
     }
     return 1;
@@ -414,7 +414,7 @@ static int confirm(const char *text)
 #ifdef _WIN32
     wchar_t wide[2048], title[128];
     to_wide(text, wide, 2048);
-    to_wide("Установка русского перевода SemiSim", title, 128);
+    to_wide("Install the SemiSim Russian translation", title, 128);
     return MessageBoxW(NULL, wide, title, MB_OKCANCEL | MB_ICONQUESTION) == IDOK;
 #else
     char answer[8];
@@ -431,7 +431,7 @@ static void notify(const char *text)
 #ifdef _WIN32
     wchar_t wide[2048], title[128];
     to_wide(text, wide, 2048);
-    to_wide("Русский перевод SemiSim", title, 128);
+    to_wide("SemiSim Russian translation", title, 128);
     MessageBoxW(NULL, wide, title, MB_OK | MB_ICONINFORMATION);
 #else
     printf("%s\n", text);
@@ -444,7 +444,7 @@ static void fail(const char *text)
 #ifdef _WIN32
     wchar_t wide[2048], title[128];
     to_wide(text, wide, 2048);
-    to_wide("Не получилось", title, 128);
+    to_wide("Failed", title, 128);
     MessageBoxW(NULL, wide, title, MB_OK | MB_ICONERROR);
 #else
     fprintf(stderr, "%s\n", text);
@@ -467,7 +467,7 @@ int main(int argc, char **argv)
 #endif
 
     if (!self_dir(base, sizeof base)) {
-        fprintf(stderr, "не удалось определить папку программы\n");
+        fprintf(stderr, "cannot locate the program folder\n");
         return 1;
     }
     embedded = extract_payload(base);
@@ -484,13 +484,13 @@ int main(int argc, char **argv)
         join(src, sizeof src, base, PAYLOAD_JAR);
         char msg[1024];
         snprintf(msg, sizeof msg,
-                 "Рядом с установщиком нет пакета перевода.\n\n"
-                 "Ожидался:\n  payload\\" PATCH_NAME "\n\n"
-                 "Установщик без перевода не работает: он лишь копирует\n"
-                 "готовые файлы в папку игры.\n\n"
-                 "В папке проекта выполните:\n"
+                 "No translation package next to the installer.\n\n"
+                 "Expected:\n  payload\\" PATCH_NAME "\n\n"
+                 "The installer only copies ready files, so it needs the\n"
+                 "translation package to do anything.\n\n"
+                 "In the project folder run:\n"
                  "  bash tools/build_dist.sh\n\n"
-                 "Затем запускайте setup.exe из папки dist.");
+                 "then run setup.exe from the dist folder.");
         notify(msg);
         return 1;
     }
@@ -499,7 +499,7 @@ int main(int argc, char **argv)
     if (argc > 1) {
         join(probe, sizeof probe, argv[1], MARKER);
         if (!file_exists(probe)) {
-            fprintf(stderr, "В папке %s нет файла %s\n", argv[1], MARKER);
+            fprintf(stderr, "no file %s in %s\n", argv[1], MARKER);
             return 1;
         }
         snprintf(hits[0], MAX_PATH, "%s", argv[1]);
@@ -520,43 +520,43 @@ int main(int argc, char **argv)
     }
 
     if (count == 0) {
-        fprintf(stderr, "Игра SemiSim не найдена.\n"
-                        "Скопируйте эту папку в папку с игрой и запустите установщик снова.\n");
+        fprintf(stderr, "SemiSim not found.\n"
+                        "Copy this folder into the game folder and run the installer again.\n");
         return 1;
     }
     if (count > 1)
-        fprintf(stderr, "Найдено копий игры: %d, берём первую.\n", count);
+        fprintf(stderr, "game copies found: %d, using the first.\n", count);
 
     game = hits[0];
-    fprintf(stderr, "Папка игры: %s\n", game);
+    fprintf(stderr, "Game folder: %s\n", game);
 
     /* Повторный запуск: бэкап есть — это откат */
     join(probe, sizeof probe, game, "lib/app/" PATCH_NAME);
     if (file_exists(probe)) {
         snprintf(text, sizeof text,
-                 "Русский перевод уже установлен в эту копию игры.\n"
-                 "Вернуть английский оригинал?\n\n%s", game);
+                 "The Russian translation is already installed in this game copy.\n"
+                 "Restore the English original?\n\n%s", game);
         if (confirm(text)) {
             char patch[MAX_PATH];
             remove_classpath(game);
             snprintf(patch, sizeof patch, "%s/lib/app/" PATCH_NAME, game);
             if (file_exists(patch))
                 remove(patch);
-            notify("Русский перевод отключён. Игра снова на английском.\n"
-                   "Файлы игры не изменялись.");
+            notify("The Russian translation is disabled. The game is in English again.\n"
+                   "No game file was changed.");
             return 0;
         }
-        fprintf(stderr, "Отменено — ничего не изменено.\n");
+        fprintf(stderr, "Cancelled - nothing was changed.\n");
         return 0;
     }
 
     snprintf(text, sizeof text,
-             "Установить русский перевод в:\n%s\n\n"
-             "Файлы игры не изменяются: рядом появится файл " PATCH_NAME "\n"
-             "и он будет прописан первым в classpath.\n"
-             "Исходная справка сохранится с расширением .orig", game);
+             "Install the Russian translation into:\n%s\n\n"
+             "No game file is replaced: " PATCH_NAME " will appear next to it,\n"
+             "listed first on the classpath.\n"
+             "The original help pages are kept with the .orig extension", game);
     if (!confirm(text)) {
-        fprintf(stderr, "Отменено — ничего не изменено.\n");
+        fprintf(stderr, "Cancelled - nothing was changed.\n");
         return 0;
     }
 
@@ -566,14 +566,14 @@ int main(int argc, char **argv)
         char patch[MAX_PATH];
         snprintf(patch, sizeof patch, "%s/lib/app/" PATCH_NAME, game);
         if (!copy_file(src, patch)) {
-            notify("Не удалось записать файл перевода.");
+            notify("Could not write the translation file.");
             return 1;
         }
         replaced++;
         if (!add_classpath(game)) {
-            notify("Не удалось прописать перевод в " CFG_NAME "\n"
-                   "Скопируйте вручную: lib\\" PATCH_NAME "\n"
-                   "в начало строк app.classpath= в файле " CFG_NAME);
+            notify("Could not register the translation in " CFG_NAME "\n"
+                   "Copy it by hand: lib\\" PATCH_NAME "\n"
+                   "to the top of the app.classpath= list in " CFG_NAME);
             return 1;
         }
     }
@@ -597,17 +597,17 @@ int main(int argc, char **argv)
     cleanup_temp();
 
     if (replaced == 0) {
-        fprintf(stderr, "Ни один файл игры не заменён.\n");
+        fprintf(stderr, "No game file was replaced.\n");
         return 1;
     }
 
     cleanup_temp();
 
     snprintf(text, sizeof text,
-             "Готово.\n\n"
-             "Теперь запускайте SemiSim из Steam — интерфейс будет на русским.\n\n"
-             "Файлы игры не изменялись.\n\n"
-             "Вернуть английский: запустите установщик ещё раз.", replaced);
+             "Done.\n\n"
+             "Start SemiSim through Steam as usual - the interface will be in Russian.\n\n"
+             "No game file was changed.\n\n"
+             "To go back to English: run this installer again.", replaced);
     notify(text);
     return 0;
 }
