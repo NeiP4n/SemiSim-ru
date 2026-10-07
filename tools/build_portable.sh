@@ -42,14 +42,14 @@ def to_cp1251(text: str) -> str:
     return text
 
 
-for name in ("ПРОСТО-СКОПИРУЙ.txt", "Установить-перевод.bat"):
+for name in ("INSTALL-MANUAL.txt", "install-translation.bat"):
     raw = to_cp1251((src / name).read_text(encoding="utf-8"))
     (out / name).write_bytes(raw.replace("\n", "\r\n").encode("cp1251"))
     print(f"  {name} - Windows-1251, {len(raw)} символов")
 PY
 
-cp "$SRC/установить-перевод.sh" "$OUT/установить-перевод.sh"
-chmod +x "$OUT/установить-перевод.sh"
+cp "$SRC/install-translation.sh" "$OUT/install-translation.sh"
+chmod +x "$OUT/install-translation.sh"
 
 # проверяем состав архива
 rm -f "$DIST/SemiSim-ru-portable.zip"

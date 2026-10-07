@@ -34,8 +34,8 @@ FORBIDDEN_SUFFIX = (
     ".class",
 )
 REQUIRED = ("ru-patch.jar", "README.html", "examples.html")
-SCRIPTS = ("Установить-перевод.bat", "установить-перевод.sh")
-TEXT_FILES = ("ПРОСТО-СКОПИРУЙ.txt",)
+SCRIPTS = ("install-translation.bat", "install-translation.sh")
+TEXT_FILES = ("INSTALL-MANUAL.txt",)
 
 
 def cyrillic(data: bytes) -> bool:
@@ -79,7 +79,7 @@ def main() -> int:
                 problems.append(f"файл игры попал в архив: {name}")
 
         # тексты должны быть в Windows-1251: cmd и «Блокнот» иначе покажут мусор
-        for want in TEXT_FILES + ("Установить-перевод.bat",):
+        for want in TEXT_FILES + ("install-translation.bat",):
             if want not in base:
                 continue
             raw = zf.read(base[want])
@@ -122,7 +122,7 @@ def main() -> int:
                     problems.append("в пакете нет ни одной русской строки")
 
         # инструкция обязана говорить, куда класть и как вернуть английский
-        readme_name = base.get("ПРОСТО-СКОПИРУЙ.txt")
+        readme_name = base.get("INSTALL-MANUAL.txt")
         if readme_name:
             text = zf.read(readme_name).decode("cp1251", "replace")
             for needle in ("ru-patch.jar", "SemiSim.cfg", "$APPDIR"):

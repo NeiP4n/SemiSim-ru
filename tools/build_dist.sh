@@ -55,7 +55,7 @@ for f in setup.exe setup-32.exe setup-linux; do
         --exe "$DIST/$f" \
         --jar "$PATCH" \
         --help-dir help \
-        --guide "$DIST/УСТАНОВКА-$f.txt" >/dev/null
+        --guide "$DIST/INSTALL-$f.txt" >/dev/null
 done
 
 # 3. проверяем: внутри только перевод, никаких файлов игры
@@ -65,11 +65,15 @@ for f in setup.exe setup-32.exe setup-linux; do
 done
 
 # 4. инструкция, продублированная текстом (внутри установщика она тоже есть)
-cp "$DIST/УСТАНОВКА-setup.exe.txt" "$DIST/УСТАНОВИТЬ.txt"
+cp "$DIST/INSTALL-setup.exe.txt" "$DIST/INSTALL.txt"
 
 if command -v zip >/dev/null 2>&1; then
-    (cd "$DIST" && zip -qr9 "SemiSim-ru-setup.zip" . -x 'УСТАНОВКА-*.txt')
+    # перечисляем файлы явно: zip по маске затянул бы в архив
+    # портативный набор, который лежит в той же папке dist/
+    (cd "$DIST" && zip -q9 "SemiSim-ru-setup.zip" \
+        setup.exe setup-32.exe setup-linux INSTALL.txt)
     echo "архив: dist/SemiSim-ru-setup.zip"
+    unzip -l "$DIST/SemiSim-ru-setup.zip" | tail -n +4 | head -n -2
 fi
 
 echo "дистрибутив: $DIST"

@@ -20,7 +20,7 @@ if [[ -z "$GAME" ]]; then
 fi
 
 if [[ -z "$GAME" || ! -f "$GAME/$MARKER" ]]; then
-    echo "Папка игры не найдена. Запустите так: ./установить-перевод.sh /путь/к/SemiSim" >&2
+    echo "Папка игры не найдена. Запустите так: ./install-translation.sh /путь/к/SemiSim" >&2
     exit 1
 fi
 

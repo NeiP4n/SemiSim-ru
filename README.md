@@ -50,9 +50,9 @@
 |---|---|
 | `ru-patch.jar` | перевод, копируется в `lib/app` рядом с JAR игры |
 | `README.html`, `examples.html` | русская справка |
-| `Установить-перевод.bat` | копирует всё и правит конфиг сам (Windows) |
-| `установить-перевод.sh` | то же для Linux |
-| `ПРОСТО-СКОПИРУЙ.txt` | три способа установки, включая ручное копирование |
+| `install-translation.bat` | копирует всё и правит конфиг сам (Windows) |
+| `install-translation.sh` | то же для Linux |
+| `INSTALL-MANUAL.txt` | три способа установки, включая ручное копирование |
 
 Ручной способ в двух словах: положить `ru-patch.jar` в `lib/app` и добавить
 строку `app.classpath=$APPDIR/ru-patch.jar` в начало списка `app.classpath=`

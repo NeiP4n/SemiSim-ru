@@ -6,18 +6,18 @@
                         надписями. Копируется РЯДОМ с SemiSim-2.2.1.jar.
   README.html         — русское руководство, заменяет одноимённый файл игры.
   examples.html       — русский каталог примеров, заменяет одноимённый.
-  Установить-перевод.bat    — для Windows: копирует всё сам и правит
+  install-translation.bat — для Windows: копирует всё сам и правит
                         SemiSim.cfg. Запустите двойным кликом.
-  установить-перевод.sh    — то же для Linux.
+  install-translation.sh  — то же для Linux.
 
 Способ 1. Автоматически (Windows)
-  Закройте игру и запустите двойным кликом Установить-перевод.bat.
+  Закройте игру и запустите двойным кликом install-translation.bat.
   Если игра не нашлась — перетащите её папку на этот файл.
 
 Способ 2. Автоматически (Linux)
-  chmod +x установить-перевод.sh
-  ./установить-перевод.sh
-  или с путём: ./установить-перевод.sh ~/.local/share/Steam/steamapps/common/SemiSim
+  chmod +x install-translation.sh
+  ./install-translation.sh
+  или с путём: ./install-translation.sh ~/.local/share/Steam/steamapps/common/SemiSim
 
 Способ 3. Вручную, без скриптов
   1. Скопируйте ru-patch.jar в папку игры lib/app.

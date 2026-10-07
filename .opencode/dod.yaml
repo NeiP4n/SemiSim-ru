@@ -14,7 +14,7 @@ versions:
   source: pom.xml в META-INF/maven/SemiSim/SemiSim/pom.xml
 repo_state:
   branch: main
-  head: b933bd220dca6a59672def0125e80640be2bbb37
+  head: 3ea9f9b362e74333c1bf7d9e201bf5c7b051fea2
   dirty: 0
   remote: https://github.com/NeiP4n/SemiSim-ru.git
 task_id: semisim-ru-localization-2026-10-06
@@ -133,13 +133,13 @@ coverage:
   - path: tools/check_portable.py
     status: IN_SCOPE
     reason: оракул состава портативного архива, лист L-PORTABLE
-  - path: tools/portable/Установить-перевод.bat
+  - path: tools/portable/install-translation.bat
     status: IN_SCOPE
     reason: скрипт установки для Windows, лист L-PORTABLE-SCRIPTS
-  - path: tools/portable/установить-перевод.sh
+  - path: tools/portable/install-translation.sh
     status: DEPENDENCY
     reason: 'служебный файл: назван в what листа L-PORTABLE-SCRIPTS, проверяется тем же запуском'
-  - path: tools/portable/ПРОСТО-СКОПИРУЙ.txt
+  - path: tools/portable/INSTALL-MANUAL.txt
     status: DEPENDENCY
     reason: 'служебный файл: инструкция, назван в what листа L-PORTABLE и проверяется оракулом на кодировку'
   - path: out/ru-patch.jar
@@ -696,7 +696,7 @@ leaves:
   target:
     path: tools/build_portable.sh
   group: 'Этап 8 — портативный набор без установщика'
-  what: 'tools/build_portable.sh собирает архив с переводом и справкой; tools/portable/ПРОСТО-СКОПИРУЙ.txt
+  what: 'tools/build_portable.sh собирает архив с переводом и справкой; tools/portable/INSTALL-MANUAL.txt
     объясняет установку, тексты сохраняются в Windows-1251'
   task_state: DONE
   coverage: IN_SCOPE
@@ -749,9 +749,9 @@ leaves:
     command: python3 tools/check_portable.py
 - id: L-PORTABLE-SCRIPTS
   target:
-    path: tools/portable/Установить-перевод.bat
+    path: tools/portable/install-translation.bat
   group: 'Этап 8 — портативный набор без установщика'
-  what: 'tools/portable/Установить-перевод.bat и tools/portable/установить-перевод.sh копируют пакет
+  what: 'tools/portable/install-translation.bat и tools/portable/install-translation.sh копируют пакет
     перевода и правят classpath в SemiSim.cfg без exe-установщика'
   task_state: DONE
   coverage: IN_SCOPE

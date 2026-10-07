@@ -128,7 +128,7 @@ def main():
     ap.add_argument("--exe", default="setup.exe")
     ap.add_argument("--jar", default="out/SemiSim-2.2.1-ru.jar")
     ap.add_argument("--help-dir", default="help")
-    ap.add_argument("--guide", default="УСТАНОВКА.txt")
+    ap.add_argument("--guide", default="INSTALL.txt")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
     report = build(args.exe, args.jar, args.help_dir, args.guide, args.out)
