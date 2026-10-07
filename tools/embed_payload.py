@@ -24,39 +24,48 @@ MAGIC = b"SEMISIMPAYL"
 # начало приклеенной части, не зная её длины.
 TAIL = b"SEMISIMEND"
 NAME_LEN = 64
-GUIDE = """SEMISIM RUSSIAN TRANSLATION
-===============================
+GUIDE = """УСТАНОВКА РУССКОГО ПЕРЕВОДА SEMISIM
+====================================
 
-Everything needed is already inside this file. Nothing to download.
+Всё нужное уже внутри этого файла. Ничего скачивать не нужно.
 
-HOW TO ENABLE THE TRANSLATION
-1. Close the game if it is running.
-2. Run this file.
-3. Confirm the dialog: it finds the SemiSim game folder on its own.
-4. Start the game through Steam as usual. The interface will be in Russian.
+Как включить перевод
+1. Закройте игру, если она запущена.
+2. Запустите этот файл двойным кликом.
+3. Программа сама найдёт папку игры SemiSim и спросит подтверждение.
+4. Запускайте игру как обычно, через Steam. Интерфейс будет на русском.
 
-WHAT IT DOES
-- Places ru-patch.jar next to the game: that is the translation, 265 KB.
-- Adds one line to SemiSim.cfg so the translation loads first.
-- Replaces the help pages with the Russian ones, originals kept as .orig.
+Что произойдёт
+- Рядом с игрой появится файл ru-patch.jar — это перевод, 260 КБ.
+- В файле SemiSim.cfg появится одна строка: наш перевод стоит первым
+  в списке загрузки классов, поэтому он перекрывает английский.
+- Файлы игры не изменяются вообще: SemiSim-2.2.1.jar остаётся оригинальным.
+- Руководство и каталог примеров станут русскими, исходные копии
+  сохранятся с расширением .orig.
 
-No game file is changed at all: SemiSim-2.2.1.jar stays original, so Steam
-never restores it during its integrity check. If it ever does, just run the
-installer again.
+Вернуть английский
+Запустите этот файл ещё раз и согласитесь на восстановление.
+Программа уберёт файл перевода и вернёт SemiSim.cfg как было.
 
-GOING BACK TO ENGLISH
-Run this file again and agree to restore the original.
+Почему игра не ломается при проверке Steam
+Steam проверяет целостность только своих файлов. Наш файл он не знает,
+а SemiSim-2.2.1.jar мы не трогаем — поэтому проверка проходит без
+возврата к английскому. Достаточно повторного запуска установщика.
 
-WHAT IS NOT TRANSLATED
-The standard Swing dialog labels (Open, Cancel, Look In) come from Java's own
-resources, not from the game's files. Translating them needs separate work.
+Тёмная тема
+В игре она уже есть: Файл → Настройки → Тема интерфейса → FlatLaf Dark →
+Применить. Выбор сохраняется и переживает перезапуск.
 
-REQUIREMENTS
-Windows 64-bit. An installed copy of SemiSim. Java is not needed: the game
-starts through Steam as usual.
+Что НЕ переведено
+Надписи стандартных окон (Open, Cancel, Look In) берутся из ресурсов
+самой Java, а не из файлов игры. Их перевод требует отдельной работы.
 
-SemiSim belongs to its author Brandon Li. This installer carries only the
-translation; no game files are distributed.
+Требования
+Windows 64 бит. Установленная игра SemiSim из Steam. Java не нужна:
+игра запускается через Steam как обычно.
+
+Игра SemiSim принадлежит её автору Brandon Li. Этот установщик содержит
+только перевод и перевод справки — файлы игры не распространяются.
 """
 
 

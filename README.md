@@ -1,79 +1,84 @@
-# SemiSim — Russian translation
+# SemiSim — русский перевод
 
-Russian interface for [SemiSim](https://store.steampowered.com/app/4864110/Brandons_Semiconductor_Simulator/)
-(semiconductor physics simulator, version 2.2.1).
+Русский интерфейс для игры [SemiSim](https://store.steampowered.com/app/4864110/Brandons_Semiconductor_Simulator/)
+(симулятор физики полупроводников, версия 2.2.1).
 
-No game files here. The translation is applied as a separate package placed
-next to your own copy of SemiSim — the game itself is never modified.
+Здесь нет файлов игры. Готовый установщик `setup.exe` (479 КБ) несёт весь
+перевод внутри себя и кладёт его рядом с вашей копией SemiSim — файлы игры
+при этом не изменяются вообще.
 
-## What is translated
+## Что переведено
 
-| Part | State |
+| Часть | Состояние |
 |---|---|
-| Menus, panels, buttons, tools | complete |
-| Dialogs: settings, advanced settings, material editor, calculators | complete |
-| Material names, view kinds, probes | complete |
-| Error messages and confirmation questions | complete |
-| Built-in help (manual and examples gallery) | complete |
-| Cyrillic glyphs in the game's own bitmap font | 66 letters, added |
-| Standard Swing dialog labels (Open, Cancel) | no, see Limitations |
+| Меню, панели, кнопки, инструменты | полностью |
+| Окна: настройки, расширенные настройки, редактор материалов, калькуляторы | полностью |
+| Названия материалов, видов отображения, зондов | полностью |
+| Сообщения об ошибках и вопросы с подтверждением | полностью |
+| Встроенная справка (руководство и каталог примеров) | полностью |
+| Кириллица в собственном растровом шрифте игры | 66 букв, добавлены |
+| Надписи стандартных окон Swing (Open, Cancel) | нет, см. «Ограничения» |
 
-Units and physics symbols (ρ, ϕ, Jₙ, [eV]) are deliberately left in Latin.
+Единицы измерения и физические символы (ρ, ϕ, Jₙ, [eV]) намеренно оставлены
+латиницей — так вы решили при заказе перевода.
 
-## Install in one click (Windows)
+## Установка в один клик (Windows)
 
-Download `setup.exe` (480 KB) and run it. It finds the SemiSim game folder on
-its own and asks for confirmation. Nothing else to do: the translation and
-the Russian help are already inside the file.
+Скачайте `setup.exe` (479 КБ) и запустите двойным кликом. Он сам найдёт папку
+игры SemiSim и спросит подтверждение. Больше ничего делать не нужно: перевод
+и русская справка уже внутри этого файла.
 
-What it does:
+Что он делает:
 
-* places `ru-patch.jar` next to the game — 265 KB, only the changed classes;
-* adds one line to `SemiSim.cfg` so the translation loads first;
-* replaces the help pages with the Russian ones, originals kept as `.orig`.
+* кладёт рядом с игрой файл `ru-patch.jar` — 265 КБ, только изменённые классы;
+* добавляет в `SemiSim.cfg` одну строку, чтобы перевод грузился первым;
+* кладёт русское руководство и каталог примеров, оригиналы — с расширением `.orig`.
 
-**No game file is modified at all.** `SemiSim-2.2.1.jar` stays original, so
-Steam never restores it during its integrity check.
+**Файлы игры не изменяются вообще.** `SemiSim-2.2.1.jar` остаётся
+оригинальным, поэтому Steam не ругается на проверку целостности.
 
-To go back to English, run `setup.exe` again and agree to the rollback.
+Вернуть английский — запустите `setup.exe` ещё раз и согласитесь с откатом.
 
-`SemiSim-ru-setup.zip` has the full set: `setup.exe`, a 32-bit build and a
-Linux build.
+Полный набор для других (setup.exe, 32-битная сборка, сборка для Linux) —
+`dist/SemiSim-ru-setup.zip`.
 
-## Install without the installer: just copy files
+### Без установщика: просто скопировать файлы
 
-`SemiSim-ru-portable.zip` (279 KB) is the same translation with no exe at all:
+`dist/SemiSim-ru-portable.zip` (278 КБ) — тот же перевод, но без exe. Внутри:
 
-| File | What it is |
+| Файл | Что это |
 |---|---|
-| `ru-patch.jar` | the translation, copy into `lib/app` next to the game's JAR |
-| `README.html`, `examples.html` | Russian help pages |
-| `install-translation.bat` | copies everything and fixes the config (Windows) |
-| `install-translation.sh` | the same for Linux |
-| `INSTALL-MANUAL.txt` | three ways to install, including plain manual copying |
+| `ru-patch.jar` | перевод, копируется в `lib/app` рядом с JAR игры |
+| `README.html`, `examples.html` | русская справка |
+| `install-translation.bat` | копирует всё и правит конфиг сам (Windows) |
+| `install-translation.sh` | то же для Linux |
+| `INSTALL-MANUAL.txt` | три способа установки, включая ручное копирование |
 
-The manual way in short: put `ru-patch.jar` into `lib/app` and add this line
-at the top of the `app.classpath=` list in `SemiSim.cfg`:
+Ручной способ в двух словах: положить `ru-patch.jar` в `lib/app` и добавить
+строку `app.classpath=$APPDIR/ru-patch.jar` в начало списка `app.classpath=`
+в `SemiSim.cfg`.
 
+## Сборка из исходников
+
+Перевод собирается из вашей копии игры: словарь лежит в репозитории,
+инструмент переписывает строковые константы прямо в байткоде.
+
+```bash
+git clone https://github.com/NeiP4n/SemiSim-ru
+cd SemiSim-ru
+bash tools/build.sh          # проверки + русский JAR + пакет перевода
+bash tools/build_all.sh      # установщик с переводом внутри + портативный архив
 ```
-app.classpath=$APPDIR/ru-patch.jar
-```
 
-## Why the game is never touched
+`build_dist.sh` после сборки прогоняет `tools/check_installer.py`: он
+убеждается, что внутри установщика только перевод и справка, а ни одного
+файла игры. Проверка умеет и наоборот — обязана падать на испорченном
+установщике, иначе её зелёный вывод ничего не значит.
 
-Steam verifies the integrity of its own files and restores the original if you
-replace the JAR. So the translation is put on the classpath instead: the JVM
-takes the **first** class it finds, so a translation listed first overrides
-the original, while `SemiSim-2.2.1.jar` stays untouched.
+## Как включить перевод вручную (без установщика)
 
-Verified live: with this classpath the main window is loaded from
-`ru-patch.jar` and the dialogs read "Settings", "Material editor",
-"Advanced settings".
-
-## Run it manually (no installer)
-
-Needs **JDK 25** — exactly 25, not 21: the JavaFX inside the game is built for
-class file version 68, and older JVMs fail with `UnsupportedClassVersionError`.
+Нужен **JDK 25** — именно 25, не 21: JavaFX внутри игры соббран под class file
+version 68, и на более старой JVM игра падает с `UnsupportedClassVersionError`.
 
 ```bash
 git clone https://github.com/NeiP4n/SemiSim-ru
@@ -81,98 +86,97 @@ cd SemiSim-ru
 bash tools/build.sh
 ```
 
-The script finds the game's JAR by itself. If it does not, point it there:
+Скрипт сам найдёт JAR игры. Если не найдёт, укажите путь явно:
 
 ```bash
-SEMISIM_GAME_JAR=/path/to/SemiSim/lib/app/SemiSim-2.2.1.jar bash tools/build.sh
+SEMISIM_GAME_JAR=/путь/к/SemiSim/lib/app/SemiSim-2.2.1.jar bash tools/build.sh
 ```
 
-Then start the game with the translation:
+Дальше запустите игру с переводом:
 
 ```bash
 ./SemiSim-ru.sh
 ```
 
-## Build from source
+или скопируйте `out/ru-patch.jar` в папку игры и пропишите его первым в
+`SemiSim.cfg` — ровно то, что делает установщик:
 
-The translation is rebuilt from your own copy of the game: the dictionary
-lives in the repository, the tool rewrites string constants straight in the
-bytecode.
-
-```bash
-git clone https://github.com/NeiP4n/SemiSim-ru
-cd SemiSim-ru
-bash tools/build.sh          # checks + Russian JAR + translation package
-bash tools/build_all.sh      # installer with the translation inside + portable archive
+```
+app.classpath=$APPDIR/ru-patch.jar
 ```
 
-`build_dist.sh` and `build_portable.sh` verify their own output with
-`tools/check_installer.py` and `tools/check_portable.py`: they make sure the
-archives contain the translation only, not a single game file. Both checks can
-also be told to fail — a check that never fails checks nothing.
+Чтобы запускать одним кликом: `bash tools/install_shortcut.sh` — ярлык
+«SemiSim (русский)» появится на рабочем столе.
 
-## Dark theme
+## Почему игра не трогается и как это работает
 
-The game already has one; this translation did not add it. Go to
-**File → Settings → UI theme → FlatLaf Dark → Apply**. Available: Metal,
-Nimbus, CDE/Motif, GTK+, FlatLaf Light, FlatLaf Dark, Solarized Light,
-Material Darker (Material) and High Contrast. The choice is saved in
-`preferences.json` and survives a restart.
+Steam проверяет целостность своих файлов и вернёт оригинал, если заменить
+JAR. Поэтому используется приём с classpath: JVM берёт **первый найденный**
+класс, поэтому перевод кладётся первым в списке загрузки и перекрывает
+оригинал, а `SemiSim-2.2.1.jar` остаётся нетронутым.
 
-## How it works
+Проверено живьём: при запуске с нашим classpath главное окно грузится из
+`ru-patch.jar`, надписи окон — «Настройки», «Редактор материалов»,
+«Расширенные настройки».
 
-The interface text is baked into the bytecode as string constants. The tools
-rewrite those constants directly in the `.class` files, recomputing lengths,
-and repackage the JAR. The game is not obfuscated, so reading and replacing is
-reliable.
+## Как это устроено
 
-The main danger is strings that look like ordinary text but are actually keys.
-The first version of the patch failed exactly there: translating `East` broke
-`BorderLayout` (`cannot add to layout: unknown constraint: Восток`). Never
-translated:
+Текст интерфейса зашит в байткод как строковые константы. Инструменты
+переписывают эти константы прямо в `.class`, пересчитывая длины, и
+пересобирают JAR. Обфускации в игре нет, поэтому чтение и замена надёжны.
 
-* save and settings keys (`theme`, `imgsize`, `SEMI_N_TYPE`, `rho_n` and 125
-  more) — the game looks them up by string comparison, translating breaks file
-  reading;
-* Swing API constants (`North`, `Center`, `SansSerif`, …) — passed to the API;
-* `SI` — the value of the `units` key in `preferences.json`; the enum has no
-  separate display name.
+Главная опасность — строки, которые выглядят как обычный текст, но на деле
+служебные. Первый вариант патча так и упал: перевод `East` сломал `BorderLayout`
+(`cannot add to layout: unknown constraint: Восток`). Запрещены:
 
-The checks in `tools/build.sh` prevent such a mistake: the dictionary is
-verified against the classification, and the classification against an oracle
-that is deliberately broken and must notice.
+* ключи сохранений и настроек (`theme`, `imgsize`, `SEMI_N_TYPE`, `rho_n` и ещё 125) —
+  игра ищет их сравнением строк, перевод ломает чтение файлов;
+* значения констант Swing (`North`, `Center`, `SansSerif`, …) — передаются в API;
+* `SI` — это значение ключа `units` в `preferences.json`, у перечисления нет
+  отдельного отображаемого имени.
 
-## Translation integrity check
+Проверки в `tools/build.sh` не дают совершить такую ошибку: перед сборкой
+словарь сверяется с классификацией, а классификация — с оракулом, который
+намеренно портится и обязан это заметить.
+
+## Проверка целостности перевода
 
 ```bash
 bash tools/negative_control.sh
 ```
 
-The script breaks data on temporary copies (marks a key as translatable,
-corrupts the opcode table, feeds a JAR without translations) and requires every
-check to notice. If an oracle catches nothing, it checks nothing, and its green
-output is worthless.
+Скрипт ломает данные на временных копиях (объявляет ключ переводимым,
+портит таблицу опкодов, подсовывает JAR без переводов) и требует, чтобы
+каждая проверка это заметила. Если оракул ничего не ловит — он ничего
+не проверяет, и такой зелёный вывод бесполезен.
 
-## Limitations
+## Тёмная тема
 
-* Standard Swing dialog labels (`Open`, `Cancel`, `Look In`) are still English:
-  they come from Java's own resources, not from the game's files. Translating
-  them needs separate work on the FlatLaf bundle.
-* Version 2.2.1. A different version will probably still build, but the
-  dictionary has to be checked: `tools/extract.py` shows which strings changed.
-* Formulas in the help are rendered by MathJax from a CDN — they need internet.
+В игре она уже есть — перевод её не добавлял. Путь: **Файл → Настройки →
+Тема интерфейса → FlatLaf Dark → Применить**. Доступны Metal, Nimbus,
+CDE/Motif, GTK+, FlatLaf Light, FlatLaf Dark, Solarized Light,
+Material Darker (Material) и High Contrast. Выбор сохраняется в
+`preferences.json` и переживает перезапуск.
 
-## License and attribution
+## Ограничения
 
-SemiSim belongs to its author Brandon Li. This repository contains only the
-translation and the tooling; no game files are distributed.
+* Надписи стандартных окон Swing (диалог открытия файла: `Open`, `Cancel`,
+  `Look In`) остались английскими: они берутся из ресурсов самой Java,
+  а не из строк игры. Требует отдельной работы с bundle FlatLaf.
+* Версия 2.2.1. Для другой версии сборка, скорее всего, пройдёт, но словарь
+  надо сверить: `tools/extract.py` покажет, какие строки в игре изменились.
+* Формулы в справке рендерятся MathJax через CDN — для них нужен интернет.
 
+## Лицензия и авторство
+
+Игра SemiSim принадлежит её автору Brandon Li. Этот репозиторий содержит
+только перевод и инструменты, файлы игры не распространяются.
 ---
 
-## Attribution
+## Об атрибуции
 
-The interface translation, the help pages and all of the tooling in this
-repository were generated by the **OpenCode (Space Bunny Free)** model.
+Перевод интерфейса, встроенной справки и весь код инструментов в этом
+репозитории сгенерированы моделью **OpenCode (Space Bunny Free)**.
 
-Physics, terminology and wording were reviewed by a human; the accuracy of the
-terms is the translator's responsibility, not the model's.
+Проверку перевода на соответствие физике, терминологии и смыслу делал
+человек; за достоверность терминов отвечает переводчик, а не модель.

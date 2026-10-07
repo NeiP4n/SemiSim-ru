@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Russian translation installer for SemiSim, Linux, no exe needed.
-# Copies the translation next to the game and puts it first on the classpath.
-# No game file is replaced: SemiSim-2.2.1.jar stays original.
+# Установка русского перевода SemiSim без установщика — для Linux.
+# Копирует пакет перевода в папку игры и прописывает его первым в classpath.
+# Файлы игры не заменяются: SemiSim-2.2.1.jar остаётся оригинальным.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -20,15 +20,15 @@ if [[ -z "$GAME" ]]; then
 fi
 
 if [[ -z "$GAME" || ! -f "$GAME/$MARKER" ]]; then
-    echo "Game folder not found. Run: ./install-translation.sh /path/to/SemiSim" >&2
+    echo "Папка игры не найдена. Запустите так: ./install-translation.sh /путь/к/SemiSim" >&2
     exit 1
 fi
 
 APP="$GAME/lib/app"
-echo "Game folder: $GAME"
+echo "Папка игры: $GAME"
 
 if [[ ! -f "$HERE/ru-patch.jar" ]]; then
-    echo "ru-patch.jar is missing next to this script" >&2
+    echo "нет файла ru-patch.jar рядом со скриптом" >&2
     exit 1
 fi
 
@@ -39,7 +39,7 @@ for name in README.html examples.html; do
     cp -f "$HERE/$name" "$APP/$name"
 done
 
-# our classpath first, and exactly once
+# наш classpath первым, и ровно один раз
 CFG="$APP/SemiSim.cfg"
 tmp="$(mktemp)"
 inserted=0
@@ -56,13 +56,12 @@ done < "$CFG" > "$tmp"
 
 if [[ $inserted -eq 0 ]]; then
     rm -f "$tmp"
-    echo "no app.classpath= line in SemiSim.cfg - leaving it untouched" >&2
+    echo "в SemiSim.cfg не найдено ни одной строки app.classpath= — не трогаю" >&2
     exit 1
 fi
 
 cat "$tmp" > "$CFG"
 rm -f "$tmp"
 
-echo "Done. The translation is active: start the game as usual."
-echo "To go back to English: remove the ru-patch.jar line from SemiSim.cfg"
-echo "and delete the file ru-patch.jar"
+echo "Готово. Перевод включён: запускайте игру как обычно."
+echo "Вернуть английский: удалите из SemiSim.cfg строку с ru-patch.jar и файл ru-patch.jar"
